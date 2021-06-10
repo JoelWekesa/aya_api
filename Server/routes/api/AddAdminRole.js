@@ -22,7 +22,7 @@ router.put("/", async (req, res) => {
 					admin: true,
 				},
 				{
-					where: { email_address: email_address },
+					where: { email_address },
 					returning: true,
 					plain: true,
 				}
