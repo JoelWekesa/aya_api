@@ -1,10 +1,22 @@
 // require('nnode');
 // require('./server');
 require('dotenv').config()
+require('./db_config')
 const express = require('express')
 const jwt = require('jsonwebtoken')
 
+
 const app = express()
+const bodyParser = require("body-parser");
+// const cors = require("cors");
+
+// app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+// Routes
+const users = require("./routes/user");
 
 // Test unprotected route
 app.get('/api', (req, res) => {
@@ -29,20 +41,7 @@ app.post('/api/post', verifyToken, (req, res) => {
     })
 })
 
-app.post('/api/login', (req, res) => {
-    //DB User
-    const user = {
-        id: 1,
-        username: 'beia',
-        msisdn: '0722229999'
-    }
-    //sign token
-    jwt.sign({ user}, process.env.SECRET_KEY, { expiresIn: '1m' },  (err, token) => {
-        res.json({
-            token
-        })
-    })
-})
+app.use("", users);
 
 // Token Format Bearer <token>
 function verifyToken(req, res, next){

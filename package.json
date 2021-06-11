@@ -19,7 +19,15 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "njwt": "^1.0.0",
-    "nnode": "^0.3.3"
+    "nnode": "^0.3.3",
+    "pg": "^7.0.0",
+    "pg-hstore": "^2.3.4"
+  },
+  "devDependencies": {
+    "bcrypt": "^5.0.1",
+    "joi": "^17.4.0",
+    "sequelize": "^6.6.2"
   }
 }
