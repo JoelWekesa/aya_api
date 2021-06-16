@@ -1,89 +1,92 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('profile', {
+const Joi = require("joi");
+
+const Profile = sequelize.sequelize.define('profile', {
     id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+        autoIncrement: true,
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        primaryKey: true
     },
     username: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+        type: Sequelize.STRING(255),
+        allowNull: false
     },
     id_number: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false
     },
     gender: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+        type: Sequelize.STRING(255),
+        allowNull: false
     },
     dob: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+        type: Sequelize.DATEONLY,
+        allowNull: false
     },
     user_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
     },
     facility_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'facilities',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'facilities',
+            key: 'id'
+        }
     },
     cadre_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'cadres',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'cadres',
+            key: 'id'
+        }
     },
     department_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'departments',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'departments',
+            key: 'id'
+        }
     },
     licence_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'licenses',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'licenses',
+            key: 'id'
+        }
     },
     created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+        type: Sequelize.DATE,
+        allowNull: true
     },
     updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+        type: Sequelize.DATE,
+        allowNull: true
     }
-  }, {
+}, {
     sequelize,
     tableName: 'profile',
     schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "profile_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
+        {
+            name: "profile_pkey",
+            unique: true,
+            fields: [
+                {name: "id"},
+            ]
+        },
     ]
-  });
-};
+});
+
+exports.Profile = Profile;

@@ -1,41 +1,48 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('roles', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+const Joi = require("joi");
+
+const Roles = sequelize.sequelize.define(
+    'roles',
+    {
+        id: {
+            autoIncrement: true,
+            type: Sequelize.BIGINT,
+            allowNull: false,
+            primaryKey: true
+        },
+        name: {
+            type: Sequelize.STRING(255),
+            allowNull: false
+        },
+        guard_name: {
+            type: Sequelize.STRING(255),
+            allowNull: false
+        },
+        created_at: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        updated_at: {
+            type: Sequelize.DATE,
+            allowNull: true
+        }
     },
-    name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    guard_name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'roles',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "roles_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
+    {
+        sequelize,
+        tableName: 'roles',
+        schema: 'public',
+        timestamps: false,
+        indexes: [
+            {
+                name: "roles_pkey",
+                unique: true,
+                fields: [
+                    {name: "id"},
+                ]
+            },
         ]
-      },
-    ]
-  });
-};
+    }
+);
+
+exports.Roles = Roles;
