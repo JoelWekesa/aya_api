@@ -7,16 +7,16 @@ const Roles = sequelize.sequelize.define(
     {
         id: {
             autoIncrement: true,
-            type: Sequelize.BIGINT,
+            type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             primaryKey: true
         },
         name: {
-            type: Sequelize.STRING(255),
+            type: Sequelize.STRING(191),
             allowNull: false
         },
         guard_name: {
-            type: Sequelize.STRING(255),
+            type: Sequelize.STRING(191),
             allowNull: false
         },
         created_at: {
@@ -31,12 +31,12 @@ const Roles = sequelize.sequelize.define(
     {
         sequelize,
         tableName: 'roles',
-        schema: 'public',
         timestamps: false,
         indexes: [
             {
-                name: "roles_pkey",
+                name: "PRIMARY",
                 unique: true,
+                using: "BTREE",
                 fields: [
                     {name: "id"},
                 ]
