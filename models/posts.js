@@ -1,66 +1,83 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('posts', {
+const Joi = require("joi");
+
+const Posts = sequelize.sequelize.define('posts', {
     id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+        autoIncrement: true,
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        primaryKey: true
     },
     post_title: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+        type: Sequelize.STRING(255),
+        allowNull: false
     },
     post_body: {
-      type: DataTypes.TEXT,
-      allowNull: false
+        type: Sequelize.TEXT,
+        allowNull: false
     },
     featured_image: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+        type: Sequelize.STRING(191),
+        allowNull: false
     },
     status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
     },
     category_id: {
-      type: DataTypes.BIGINT,
-      allowNull: true,
-      references: {
-        model: 'categories',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: true,
+        references: {
+            model: 'categories',
+            key: 'id'
+        }
     },
     user_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
     },
     created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+        type: Sequelize.DATE,
+        allowNull: true
     },
     updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+        type: Sequelize.DATE,
+        allowNull: true
     }
-  }, {
+}, {
     sequelize,
     tableName: 'posts',
-    schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "posts_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
+        {
+            name: "PRIMARY",
+            unique: true,
+            using: "BTREE",
+            fields: [
+                {name: "id"},
+            ]
+        },
+        {
+            name: "posts_category_id_foreign",
+            using: "BTREE",
+            fields: [
+                {name: "category_id"},
+            ]
+        },
+        {
+            name: "posts_user_id_foreign",
+            using: "BTREE",
+            fields: [
+                {name: "user_id"},
+            ]
+        },
     ]
-  });
-};
+});
+
+exports.Posts = Posts

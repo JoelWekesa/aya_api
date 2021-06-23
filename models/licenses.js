@@ -1,49 +1,59 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('licenses', {
+const Joi = require("joi");
+
+const Licenses = sequelize.sequelize.define('licenses', {
     id: {
       autoIncrement: true,
-      type: DataTypes.BIGINT,
+      type: Sequelize.BIGINT.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
     user_id: {
-      type: DataTypes.BIGINT,
+      type: Sequelize.BIGINT.UNSIGNED,
       allowNull: false,
       references: {
         model: 'users',
         key: 'id'
       }
     },
-    number: {
-      type: DataTypes.STRING(255),
+    nck_number: {
+      type: Sequelize.STRING(191),
       allowNull: false
     },
     expiry_date: {
-      type: DataTypes.DATEONLY,
+      type: Sequelize.DATEONLY,
       allowNull: false
     },
     created_at: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: true
     },
     updated_at: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       allowNull: true
     }
   }, {
     sequelize,
     tableName: 'licenses',
-    schema: 'public',
     timestamps: false,
     indexes: [
       {
-        name: "licenses_pkey",
+        name: "PRIMARY",
         unique: true,
+        using: "BTREE",
         fields: [
           { name: "id" },
         ]
       },
+      {
+        name: "licenses_user_id_foreign",
+        using: "BTREE",
+        fields: [
+          { name: "user_id" },
+        ]
+      },
     ]
   });
-};
+
+exports.Licenses = Licenses

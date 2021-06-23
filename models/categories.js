@@ -1,50 +1,63 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('categories', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
-    },
-    category_name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
-    },
-    user_id: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
+
+const Categories = sequelize.sequelize.define(
+    'categories',
+    {
+      id: {
+        autoIncrement: true,
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        primaryKey: true
+      },
+      category_name: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
+      },
+      user_id: {
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: true
       }
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+    {
+      sequelize,
+      tableName: 'categories',
+      timestamps: false,
+      indexes: [
+        {
+          name: "PRIMARY",
+          unique: true,
+          using: "BTREE",
+          fields: [
+            {name: "id"},
+          ]
+        },
+        {
+          name: "categories_user_id_foreign",
+          using: "BTREE",
+          fields: [
+            {name: "user_id"},
+          ]
+        },
+      ]
     }
-  }, {
-    sequelize,
-    tableName: 'categories',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "categories_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
-    ]
-  });
-};
+);
+
+exports.Categories = Categories

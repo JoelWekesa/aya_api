@@ -1,37 +1,41 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('cadres', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    tableName: 'cadres',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "cadres_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
+
+const Cadres = sequelize.sequelize.define(
+    'cadres',
+    {
+        id: {
+            autoIncrement: true,
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            primaryKey: true
+        },
+        name: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        created_at: {
+            type: Sequelize.DATE,
+            allowNull: true
+        },
+        updated_at: {
+            type: Sequelize.DATE,
+            allowNull: true
+        }
+    }, {
+        sequelize,
+        tableName: 'cadres',
+        timestamps: false,
+        indexes: [
+            {
+                name: "PRIMARY",
+                unique: true,
+                using: "BTREE",
+                fields: [
+                    { name: "id" },
+                ]
+            },
         ]
-      },
-    ]
-  });
-};
+    });
+
+exports.Cadres = Cadres

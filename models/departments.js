@@ -1,37 +1,40 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('departments', {
+const Joi = require("joi");
+
+const Departments = sequelize.sequelize.define('departments', {
     id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+        autoIncrement: true,
+        type: Sequelize.BIGINT.UNSIGNED,
+        allowNull: false,
+        primaryKey: true
     },
     name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
+        type: Sequelize.STRING(191),
+        allowNull: false
     },
     created_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+        type: Sequelize.DATE,
+        allowNull: true
     },
     updated_at: {
-      type: DataTypes.DATE,
-      allowNull: true
+        type: Sequelize.DATE,
+        allowNull: true
     }
-  }, {
+}, {
     sequelize,
     tableName: 'departments',
-    schema: 'public',
     timestamps: false,
     indexes: [
-      {
-        name: "departments_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
-        ]
-      },
+        {
+            name: "PRIMARY",
+            unique: true,
+            using: "BTREE",
+            fields: [
+                {name: "id"},
+            ]
+        },
     ]
-  });
-};
+});
+
+exports.Departments = Departments

@@ -1,125 +1,130 @@
+const sequelize = require("../db_config");
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('facilities', {
-    id: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
+const Joi = require("joi");
+
+const Facilities = sequelize.sequelize.define('facilities',
+    {
+        id: {
+            autoIncrement: true,
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            primaryKey: true
+        },
+        Code: {
+            type: Sequelize.INTEGER,
+            allowNull: false
+        },
+        Name: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        OfficialName: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Registration_number: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        'Keph level': {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Facility_type: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Facility_type_category: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Owner: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Owner_type: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Regulatory_body: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Beds: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Cots: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        County: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Sub_county: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Ward: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        'Operation status': {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Open_whole_day: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Open_public_holidays: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Open_weekends: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Open_late_night: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Service_names: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Approved: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        'Public visible': {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Closed: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        },
+        Active: {
+            type: Sequelize.STRING(191),
+            allowNull: false
+        }
     },
-    Code: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    Name: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    OfficialName: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Registration_number: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    'Keph level': {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Facility_type: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Facility_type_category: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Owner: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Owner_type: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Regulatory_body: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Beds: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Cots: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    County: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Sub_county: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Ward: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    'Operation status': {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Open_whole_day: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Open_public_holidays: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Open_weekends: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Open_late_night: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Service_names: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Approved: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    'Public visible': {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Closed: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    Active: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'facilities',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "facilities_pkey",
-        unique: true,
-        fields: [
-          { name: "id" },
+    {
+        sequelize,
+        tableName: 'facilities',
+        timestamps: false,
+        indexes: [
+            {
+                name: "PRIMARY",
+                unique: true,
+                using: "BTREE",
+                fields: [
+                    {name: "id"},
+                ]
+            },
         ]
-      },
-    ]
-  });
-};
+    });
+
+exports.Facilities = Facilities
