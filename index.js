@@ -15,6 +15,9 @@ app.use(bodyParser.json());
 // Routes
 const users = require("./routes/api/Users");
 const login = require("./routes/api/Login");
+const listFAQs = require("./routes/api/listFAQs");
+
+app.use("/api/listFAQs", listFAQs);
 
 app.use("/api/auth", users);
 app.use("/api/auth", login);

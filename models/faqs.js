@@ -1,24 +1,27 @@
 const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('faqs', {
+const sequelize = require("../db_config");
+
+const FAQs = sequelize.sequelize.define (
+  'faqs', 
+  {
     id: {
       autoIncrement: true,
-      type: DataTypes.BIGINT,
+      type: Sequelize.BIGINT,
       allowNull: false,
       primaryKey: true
     },
-    question: {
-      type: DataTypes.STRING(255),
+    questions: {
+      type: Sequelize.STRING(255),
       allowNull: false
     },
-    answer: {
-      type: DataTypes.DATE,
+    answers: {
+      type: Sequelize.DATE,
       allowNull: true
     },    
   }, {
     sequelize,
     tableName: 'faqs',
-    schema: 'public',
+    //schema: 'public',
     timestamps: false,
     indexes: [
       {
@@ -30,4 +33,5 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+
+  exports.FAQs = FAQs;
