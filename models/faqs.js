@@ -10,11 +10,11 @@ const FAQs = sequelize.sequelize.define (
       allowNull: false,
       primaryKey: true
     },
-    questions: {
+    question: {
       type: Sequelize.STRING(255),
       allowNull: false
     },
-    answers: {
+    answer: {
       type: Sequelize.DATE,
       allowNull: true
     },    

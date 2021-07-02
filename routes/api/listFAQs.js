@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
         try {
            
             const faqs_list = await FAQs.findAll({
-                attributes: ['questions', 'answers']
+                attributes: ['question', 'answer']
                }).then((data) => {
                 return res.status(200).json(data);
               });                       
