@@ -28,7 +28,7 @@ const User = sequelize.sequelize.define(
             allowNull: false,
             unique: "users_email_unique"
         },
-        phone_number: {
+        msisdn: {
             type: Sequelize.STRING(191),
             allowNull: false,
             unique: "users_phone_number_unique"
@@ -133,7 +133,7 @@ function validateUser(user) {
             .min(3)
             .max(20)
             .required(),
-        phone_number: Joi.string()
+        msisdn: Joi.string()
             .max(15)
             .min(10)
             .required(),

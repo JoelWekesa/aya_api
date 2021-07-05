@@ -9,7 +9,7 @@ router.post("/login", async (req, res) => {
         try {
             //DB User
             //  Now find the user by their phone number
-            let user = await User.findOne({where: {phone_number: req.body.phone_number}});
+            let user = await User.findOne({where: {msisdn: req.body.msisdn}});
             if (!user) {
                 return res.status(400).json({message: "User does not exist"});
             }
@@ -30,8 +30,8 @@ router.post("/login", async (req, res) => {
             }
 
             //sign token
-            let {id, email, first_name, last_name, phoneNumber, role_id} = user;
-            jwt.sign({id, email, first_name, last_name, phoneNumber, role_id}, process.env.SECRET_KEY,
+            let {id, email, first_name, last_name, msisdn, role_id} = user;
+            jwt.sign({id, email, first_name, last_name, msisdn, role_id}, process.env.SECRET_KEY,
                 {
                     expiresIn: 43200 //Lasts 12 hours
                 }, (err, token) => {
