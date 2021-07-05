@@ -12,8 +12,8 @@ const {
 	existingEmail,
 	existingPhone,
 	existingNCKID,
-} = require("./middleware/auth/unique");
-const { superAdmin, admin } = require("./middleware/roles/roles");
+} = require("../middleware/auth/unique");
+const { superAdmin, admin } = require("../middleware/roles/roles");
 
 const PORT = process.env.PORT || 3000;
 const app = express();

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { Users } = require("../../models/Users");
+const { Users } = require("../../Server/models/Users");
 const { secrets } = require("../../config/secrets");
 
 const superAdmin = async (req, res, next) => {

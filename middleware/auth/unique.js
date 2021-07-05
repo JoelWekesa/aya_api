@@ -1,4 +1,4 @@
-const { Users } = require("../../models/Users");
+const { Users } = require("../../Server/models/Users");
 
 const existingEmail = async (req, res, next) => {
 	try {
