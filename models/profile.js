@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const Joi = require("joi");
 
 const Profile = sequelize.sequelize.define(
-    'profile',
+    'profiles',
     {
         id: {
             autoIncrement: true,
@@ -16,10 +16,6 @@ const Profile = sequelize.sequelize.define(
             allowNull: false
         },
         reg_number: {
-            type: Sequelize.INTEGER,
-            allowNull: false
-        },
-        index_number: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
@@ -65,7 +61,7 @@ const Profile = sequelize.sequelize.define(
         },
         cadre_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'cadres',
                 key: 'id'
@@ -81,7 +77,7 @@ const Profile = sequelize.sequelize.define(
         },
         licence_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'licenses',
                 key: 'id'
@@ -98,7 +94,7 @@ const Profile = sequelize.sequelize.define(
     },
     {
         sequelize,
-        tableName: 'profile',
+        tableName: 'profiles',
         timestamps: false,
         indexes: [
             {
@@ -148,4 +144,38 @@ const Profile = sequelize.sequelize.define(
     }
 );
 
+function validateProfile(profile) {
+    const schema = Joi.object({
+        username: Joi.string()
+            .min(3)
+            .max(191)
+            .required(),
+        reg_number: Joi.number()
+            .required(),
+        id_number: Joi.number()
+            .required(),
+        gender: Joi.string()
+            .required(),
+        dob: Joi.date()
+            .required(),
+        citizenship: Joi.string()
+            .required(),
+        address: Joi.string()
+            .required(),
+        user_id: Joi.number()
+            .required(),
+        facility_id: Joi.number()
+            .required(),
+        cadre_id: Joi.number()
+            .required(),
+        department_id: Joi.number()
+            .required(),
+        licence_id: Joi.number()
+            .required()
+    });
+
+    return schema.validate(profile);
+}
+
 exports.Profile = Profile;
+exports.validateProfile = validateProfile;

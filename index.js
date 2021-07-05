@@ -23,21 +23,4 @@ app.use("/api/posts", posts)
 app.use("/api/auth", users);
 app.use("/api/auth", login);
 
-// Token Format Bearer <token>
-function verifyToken(req, res, next){
-    //get token
-    const bearerHeader = req.headers['authorization']
-    //if exists
-    if (typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.split(' ')
-        const bearerToken = bearer[1]
-        //set Token
-        req.token =bearerToken
-        //next middleware
-        next()
-    } else {
-        res.sendStatus(403)
-    }
-}
-
 app.listen(5050, () =>{console.log('server listening on 5050')})

@@ -149,8 +149,31 @@ function validateUser(user) {
             .min(6)
             .max(255)
             .required(),
-        role_id: Joi.number()
-    });
+        role_id: Joi.number(),
+        username: Joi.string()
+            .min(3)
+            .max(191)
+            .required(),
+        reg_number: Joi.number()
+            .required(),
+        id_number: Joi.number()
+            .required(),
+        gender: Joi.string()
+            .required(),
+        dob: Joi.date()
+            .required(),
+        citizenship: Joi.string()
+            .required(),
+        address: Joi.string()
+            .required(),
+        // facility_id: Joi.number()
+        //     ,
+        // cadre_id: Joi.number()
+        //     ,
+        // department_id: Joi.number()
+        //     ,
+        // licence_id: Joi.number()
+    }).unknown(true);
 
     return schema.validate(user);
 }

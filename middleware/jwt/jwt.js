@@ -27,7 +27,7 @@ exports.decode = (req, res, next) => {
   const accessToken = req.headers.authorization.split(' ')[1];
   try {
     const decoded = jwt.verify(accessToken, process.env.SECRET_KEY);
-    req.userId = decoded.id;
+    req.user_id = decoded.id;
     req.user = decoded;
     return next();
   } catch (error) {
