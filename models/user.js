@@ -3,7 +3,7 @@ const Sequelize = require('sequelize');
 const Joi = require("joi");
 
 const User = sequelize.sequelize.define(
-    "users",
+    'users',
     {
         id: {
             autoIncrement: true,
@@ -31,7 +31,7 @@ const User = sequelize.sequelize.define(
         msisdn: {
             type: Sequelize.STRING(191),
             allowNull: false,
-            unique: "users_phone_number_unique"
+            unique: "users_msisdn_unique"
         },
         nckid: {
             type: Sequelize.STRING(191),
@@ -57,17 +57,29 @@ const User = sequelize.sequelize.define(
         },
         password: {
             type: Sequelize.STRING(191),
-            allowNull: false
+            allowNull: true
         },
         remember_token: {
             type: Sequelize.STRING(100),
             allowNull: true
         },
-        created_at: {
-            type: Sequelize.DATE,
+        created_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
-        updated_at: {
+        updated_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true
+        },
+        deleted_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true
+        },
+        restored_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true
+        },
+        restored_at: {
             type: Sequelize.DATE,
             allowNull: true
         }
@@ -75,7 +87,7 @@ const User = sequelize.sequelize.define(
     {
         sequelize,
         tableName: 'users',
-        timestamps: false,
+        timestamps: true,
         indexes: [
             {
                 name: "PRIMARY",
@@ -94,11 +106,11 @@ const User = sequelize.sequelize.define(
                 ]
             },
             {
-                name: "users_phone_number_unique",
+                name: "users_msisdn_unique",
                 unique: true,
                 using: "BTREE",
                 fields: [
-                    {name: "phone_number"},
+                    {name: "msisdn"},
                 ]
             },
             {

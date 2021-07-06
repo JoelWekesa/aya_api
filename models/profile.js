@@ -13,31 +13,35 @@ const Profile = sequelize.sequelize.define(
         },
         username: {
             type: Sequelize.STRING(191),
-            allowNull: false
+            allowNull: true
         },
         reg_number: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
+        },
+        index_number: {
+            type: Sequelize.INTEGER,
+            allowNull: true
         },
         id_number: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         gender: {
             type: Sequelize.ENUM('MALE', 'FEMALE', 'TRANS-GENDER', 'OTHER'),
-            allowNull: false
+            allowNull: true
         },
         dob: {
             type: Sequelize.DATEONLY,
-            allowNull: false
+            allowNull: true
         },
         citizenship: {
             type: Sequelize.STRING(191),
-            allowNull: false
+            allowNull: true
         },
         address: {
             type: Sequelize.STRING(191),
-            allowNull: false
+            allowNull: true
         },
         profile_photo: {
             type: Sequelize.STRING(191),
@@ -45,7 +49,7 @@ const Profile = sequelize.sequelize.define(
         },
         user_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'users',
                 key: 'id'
@@ -53,7 +57,7 @@ const Profile = sequelize.sequelize.define(
         },
         facility_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'facilities',
                 key: 'id'
@@ -69,7 +73,7 @@ const Profile = sequelize.sequelize.define(
         },
         department_id: {
             type: Sequelize.BIGINT.UNSIGNED,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'departments',
                 key: 'id'
@@ -83,11 +87,23 @@ const Profile = sequelize.sequelize.define(
                 key: 'id'
             }
         },
-        created_at: {
-            type: Sequelize.DATE,
+        created_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
-        updated_at: {
+        updated_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true
+        },
+        deleted_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true
+        },
+        restored_by: {
+            type: Sequelize.INTEGER.UNSIGNED,
+            allowNull: true
+        },
+        restored_at: {
             type: Sequelize.DATE,
             allowNull: true
         }
@@ -95,7 +111,7 @@ const Profile = sequelize.sequelize.define(
     {
         sequelize,
         tableName: 'profiles',
-        timestamps: false,
+        timestamps: true,
         indexes: [
             {
                 name: "PRIMARY",
@@ -106,35 +122,35 @@ const Profile = sequelize.sequelize.define(
                 ]
             },
             {
-                name: "profile_user_id_foreign",
+                name: "profiles_user_id_foreign",
                 using: "BTREE",
                 fields: [
                     {name: "user_id"},
                 ]
             },
             {
-                name: "profile_facility_id_foreign",
+                name: "profiles_facility_id_foreign",
                 using: "BTREE",
                 fields: [
                     {name: "facility_id"},
                 ]
             },
             {
-                name: "profile_cadre_id_foreign",
+                name: "profiles_cadre_id_foreign",
                 using: "BTREE",
                 fields: [
                     {name: "cadre_id"},
                 ]
             },
             {
-                name: "profile_department_id_foreign",
+                name: "profiles_department_id_foreign",
                 using: "BTREE",
                 fields: [
                     {name: "department_id"},
                 ]
             },
             {
-                name: "profile_licence_id_foreign",
+                name: "profiles_licence_id_foreign",
                 using: "BTREE",
                 fields: [
                     {name: "licence_id"},

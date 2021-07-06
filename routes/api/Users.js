@@ -16,15 +16,7 @@ router.post("/register", async (req, res) => {
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
-        const {
-            first_name,
-            last_name,
-            email,
-            msisdn,
-            nckid,
-            password,
-            role_id
-        } = req.body;
+        const {first_name, last_name, email, msisdn, nckid, password, role_id} = req.body;
         let {username, reg_number, id_number, gender, dob, citizenship, address, facility_id, cadre_id, department_id, licence_id} = req.body
         let profile = {
             username,
