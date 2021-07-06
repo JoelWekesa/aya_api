@@ -74,13 +74,13 @@ router.post("/register", async (req, res) => {
                         })
                         .catch((err) => {
                             res.status(500).json(
-                                err.errors
+                                err.errors[0].message
                             );
                         });
                 })
                 .catch((err) => {
                     res.status(500).json(
-                        err.errors
+                        err.errors[0].message
                     );
                 });
         } else {
