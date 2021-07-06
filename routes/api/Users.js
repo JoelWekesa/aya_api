@@ -6,38 +6,25 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const {Op} = require("sequelize");
 const {decode} = require('../../middleware/jwt/jwt')
+// const sequelize = require("../../db_config");
 const router = express.Router();
 
 // Register a user
 router.post("/register", async (req, res) => {
+    let transaction;
     try {
-        // let {profile} =res.body
+        // get transaction
+        // transaction = await sequelize.transaction();
+
+        //username
+
         let {error} = validateUser(req.body);
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
         const {first_name, last_name, email, msisdn, nckid, password, role_id} = req.body;
-        let {username, reg_number, id_number, gender, dob, citizenship, address, facility_id, cadre_id, department_id, licence_id} = req.body
-        let profile = {
-            username,
-            reg_number,
-            id_number,
-            gender,
-            dob,
-            citizenship,
-            address,
-            facility_id,
-            cadre_id,
-            department_id,
-            licence_id
-        }
-        if (
-            first_name &&
-            last_name &&
-            email &&
-            msisdn &&
-            password
-        ) {
+        let {username, reg_number, id_number, gender, dob, citizenship, address, facility_id, cadre_id, department_id, licence_id, index_number} = req.body
+        if (first_name && last_name && email && msisdn && password) {
             await User.create({
                 first_name,
                 last_name,
@@ -61,14 +48,17 @@ router.post("/register", async (req, res) => {
                         cadre_id,
                         department_id,
                         licence_id,
+                        index_number,
                         user_id: user.id
                     }
                     await Profile.create(profile)
-                        .then(()=>{
+                        .then(async () => {
+                            // await transaction.commit();
                             res.status(200).json({
                                 message: "You have successfully been registered.",
                                 success: true
-                            });})
+                            });
+                        })
                 })
                 .catch((err) => {
                     res.status(500).json({
@@ -81,32 +71,20 @@ router.post("/register", async (req, res) => {
             });
         }
     } catch (err) {
+        // if (transaction) await transaction.rollback();
         res.status(500).json({
             error: err.message,
         });
     }
 });
 
-//Get various roles from DB
-router.get("/get/roles", async (req, res) => {
-    // Exclude super admin in roles api
-    await Roles.findAll({where: {id: {[Op.ne]: 1}}})
-        .then((roles) => {
-            res.json({roles});
-        })
-        .catch((error) => {
-            res.status(400).json(error);
-        })
-})
-
 //Get auth User
 router.get('/user', decode, async (req, res) => {
-    await User.findById(req.user_id)
-        .then((user) => {
-            return res.status(200).json(user)
-        })
-        .catch((err) => {
-            return res.status(500).json(err.message)
-        })
+    if (req.user) {
+            return res.status(200).json(req.user)
+        } else {
+            return res.status(500).json({error: "An error Occurred"})
+        }
 })
+
 module.exports = router

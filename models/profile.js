@@ -112,6 +112,7 @@ const Profile = sequelize.sequelize.define(
         sequelize,
         tableName: 'profiles',
         timestamps: true,
+        underscored: true,
         indexes: [
             {
                 name: "PRIMARY",
