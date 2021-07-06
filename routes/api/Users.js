@@ -23,7 +23,20 @@ router.post("/register", async (req, res) => {
             return res.status(400).send(error.details[0].message);
         }
         const {first_name, last_name, email, msisdn, nckid, password, role_id} = req.body;
-        let {username, reg_number, id_number, gender, dob, citizenship, address, facility_id, cadre_id, department_id, licence_id, index_number} = req.body
+        let {
+            username,
+            reg_number,
+            id_number,
+            gender,
+            dob,
+            citizenship,
+            address,
+            facility_id,
+            cadre_id,
+            department_id,
+            licence_id,
+            index_number
+        } = req.body
         if (first_name && last_name && email && msisdn && password) {
             await User.create({
                 first_name,
@@ -59,11 +72,16 @@ router.post("/register", async (req, res) => {
                                 success: true
                             });
                         })
+                        .catch((err) => {
+                            res.status(500).json(
+                                err.errors
+                            );
+                        });
                 })
                 .catch((err) => {
-                    res.status(500).json({
-                        error: err.message,
-                    });
+                    res.status(500).json(
+                        err.errors
+                    );
                 });
         } else {
             res.status(400).json({
@@ -81,10 +99,10 @@ router.post("/register", async (req, res) => {
 //Get auth User
 router.get('/user', decode, async (req, res) => {
     if (req.user) {
-            return res.status(200).json(req.user)
-        } else {
-            return res.status(500).json({error: "An error Occurred"})
-        }
+        return res.status(200).json(req.user)
+    } else {
+        return res.status(500).json({error: "An error Occurred"})
+    }
 })
 
 module.exports = router
